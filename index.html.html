@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <title>تسجيل الدخول</title>
+  <style>
+    body {
+      direction: rtl;
+      font-family: 'Segoe UI', sans-serif;
+      background: #f4f4f4;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .login-container {
+      background-color: white;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.2);
+      width: 350px;
+      text-align: center;
+    }
+
+    .logo img {
+      width: 150px;
+      margin-bottom: 15px;
+      border-radius: 10px;
+    }
+
+    h2 {
+      margin-bottom: 10px;
+      color: #333;
+    }
+
+    p {
+      color: #555;
+      margin-bottom: 20px;
+      font-size: 14px;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 16px;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    a {
+      display: block;
+      margin-top: 10px;
+      color: #007bff;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <div class="logo">
+      <img src="the2.png">
+    </div>
+    <h2>أهلاً بك!</h2>
+    <p>كرة القدم الذكية – المستقبل هنا</p>
+    <input type="text" id="loginUsername" placeholder="اسم المستخدم">
+    <input type="password" id="loginPassword" placeholder="كلمة المرور">
+    <button onclick="login()">تسجيل الدخول</button>
+<script>
+  function login() {
+    const username = document.getElementById("loginUsername").value;
+    const password = document.getElementById("loginPassword").value;
+
+    // هنا يتم التحقق من المستخدم المسجل
+    const users = JSON.parse(localStorage.getItem("users")) || [];
+
+    const foundUser = users.find(u => u.username === username && u.password === password);
+
+    if (foundUser) {
+      localStorage.setItem("user", username); // تخزين اسم المستخدم في localStorage
+      window.location.href = "dashboard.html"; // هنا يتم تحويل المستخدم للصفحة الثانية
+    } else {
+      alert("اسم المستخدم أو كلمة المرور غير صحيحة");
+    }
+  }
+</script>
+    <a href="register.html">ليس لديك حساب؟ سجل الآن</a>
+  </div>
+
+  <script>
+    function login() {
+      const username = document.getElementById("loginUsername").value;
+      const password = document.getElementById("loginPassword").value;
+
+      const users = JSON.parse(localStorage.getItem("users")) || [];
+      const foundUser = users.find(u => u.username === username && u.password === password);
+
+      if (foundUser) {
+        localStorage.setItem("user", username);
+        window.location.href = "dashboard.html";
+      } else {
+        alert("اسم المستخدم أو كلمة المرور غير صحيحة");
+      }
+    }
+  </script>
+</body>
+</html>
