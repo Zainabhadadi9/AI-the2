@@ -120,5 +120,27 @@
       }
     }
   </script>
+<script>
+  // قائمة المستخدمين الجدد اللي تبغى تضيفهم
+  const newUsers = [
+    { username: "admin", password: "1234" },
+    { username: "ahmed", password: "pass123" },
+    { username: "sara", password: "sara2024" }
+  ];
+
+  const users = JSON.parse(localStorage.getItem("users")) || [];
+
+  newUsers.forEach(newUser => {
+    const exists = users.some(u => u.username === newUser.username);
+    if (!exists) {
+      users.push(newUser);
+      console.log("تمت إضافة:", newUser.username);
+    } else {
+      console.log("المستخدم موجود مسبقًا:", newUser.username);
+    }
+  });
+
+  localStorage.setItem("users", JSON.stringify(users));
+</script>
 </body>
 </html>
