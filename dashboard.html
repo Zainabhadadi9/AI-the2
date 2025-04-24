@@ -2,7 +2,7 @@
 <html lang="ar">
 <head>
   <meta charset="UTF-8">
-  <title>مشاهدة المباراة</title>
+  <title>مباراة ودردشة</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -46,9 +46,15 @@
       border-radius: 6px;
     }
 
-    .message span {
+    .message span.user {
       font-weight: bold;
       color: #007bff;
+    }
+
+    .message span.time {
+      color: gray;
+      font-size: 12px;
+      float: left;
     }
 
     .chat-input {
@@ -81,18 +87,22 @@
 
     .logout-btn button {
       background-color: #dc3545;
+      padding: 10px 20px;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
     }
   </style>
 </head>
 <body>
 
   <div class="video-container">
-    <h2>مباراة مباشرة</h2>
-    <!-- فيديو من اليوتيوب - يمكنك تغييره -->
-    <iframe src="https://www.youtube.com/embed/u9H82WJ9FzQ" frameborder="0" allowfullscreen></iframe>
+    <h2>📺 مشاهدة المباراة</h2>
+    <iframe src="https://www.youtube.com/embed/uVC0fwrfbFM" frameborder="0" allowfullscreen></iframe>
 
     <div class="chat-container">
-      <h3>دردشة المشجعين</h3>
+      <h3>💬 دردشة المشجعين</h3>
       <div id="messages"></div>
 
       <div class="chat-input">
@@ -110,18 +120,21 @@
     const user = localStorage.getItem("user") || "مشجع";
     const messagesContainer = document.getElementById("messages");
 
-    // تحميل الرسائل المحفوظة
+    // تحميل الرسائل السابقة عند فتح الصفحة
     window.onload = () => {
       const savedMessages = JSON.parse(localStorage.getItem("chatMessages")) || [];
       savedMessages.forEach(msg => {
-        displayMessage(msg.user, msg.text);
+        displayMessage(msg.user, msg.text, msg.time);
       });
     };
 
-    function displayMessage(username, messageText) {
+    function displayMessage(username, messageText, time) {
       const newMsg = document.createElement("div");
       newMsg.className = "message";
-      newMsg.innerHTML = <span>${username}:</span> ${messageText};
+      newMsg.innerHTML = `
+        <span class="user">${username}:</span> ${messageText}
+        <span class="time">${time}</span>
+      `;
       messagesContainer.appendChild(newMsg);
       messagesContainer.scrollTop = messagesContainer.scrollHeight;
     }
@@ -129,11 +142,13 @@
     function sendMessage() {
       const msgInput = document.getElementById("messageInput");
       const text = msgInput.value.trim();
+      const now = new Date().toLocaleTimeString();
+
       if (text !== "") {
-        displayMessage(user, text);
+        displayMessage(user, text, now);
 
         const savedMessages = JSON.parse(localStorage.getItem("chatMessages")) || [];
-        savedMessages.push({ user, text });
+        savedMessages.push({ user, text, time: now });
         localStorage.setItem("chatMessages", JSON.stringify(savedMessages));
 
         msgInput.value = "";
